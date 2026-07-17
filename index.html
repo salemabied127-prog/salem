@@ -267,6 +267,23 @@
             // إخفاء النافذة
             modal.style.display = 'none';
         }
+
+        // دالة التنقل بين الصفحات
+        function showPage(pageId) {
+            if(pageId === 'home') {
+                document.getElementById('homePage').style.display = 'block';
+                document.getElementById('contactPage').style.display = 'none';
+                document.getElementById('nav-home').classList.add('active');
+                document.getElementById('nav-contact').classList.remove('active');
+            } else if (pageId === 'contact') {
+                document.getElementById('homePage').style.display = 'none';
+                document.getElementById('contactPage').style.display = 'block';
+                document.getElementById('nav-home').classList.remove('active');
+                document.getElementById('nav-contact').classList.add('active');
+            }
+            // تمرير الشاشة للأعلى
+            window.scrollTo(0, 0);
+        }
     </script>
 </body>
 </html>
