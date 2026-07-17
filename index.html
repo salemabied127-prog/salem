@@ -541,6 +541,37 @@
             video.src = ""; // تفريغ المصدر لتوفير باقة المستخدم وسرعة الصفحة
             modal.style.display = 'none';
         }
+   let currentETag = null;
+        let currentLastModified = null;
+
+        function checkForUpdates() {
+            // نقوم بطلب ترويسات الصفحة (Headers) فقط وبدون كاش لتجنب تكرار النتائج القديمة
+            const cacheBuster = '?t=' + Date.now();
+            const targetUrl = window.location.origin + window.location.pathname + cacheBuster;
+
+            fetch(targetUrl, { method: 'HEAD' })
+                .then(response => {
+                    const etag = response.headers.get('ETag');
+                    const lastMod = response.headers.get('Last-Modified');
+                    
+                    // التعيين الأولي للقيم عند تشغيل الصفحة أول مرة
+                    if (!currentETag && !currentLastModified) {
+                        currentETag = etag;
+                        currentLastModified = lastMod;
+                        return;
+                    }
+                    
+                    // إذا تغير الـ ETag أو تاريخ آخر تعديل على السيرفر، نقوم بالتحميل فوراً
+                    if ((etag && etag !== currentETag) || (lastMod && lastMod !== currentLastModified)) {
+                        console.log("تم اكتشاف كود جديد على جيت هاب! جاري التحديث التلقائي...");
+                        window.location.reload();
+                    }
+                })
+                .catch(err => console.log("بانتظار بناء التحديثات من GitHub..."));
+        }
+
+        // افحص وجود كود جديد على السيرفر كل 5 ثوانٍ
+        setInterval(checkForUpdates, 5000);
     </script>
 </body>
 </html>
