@@ -107,8 +107,53 @@
         /* ================= الفوتر ================= */
         footer { background-color: #2c3e50; color: #ffffff; text-align: center; padding: 50px 20px; margin-top: 40px; }
         .contact-links { margin: 20px 0; }
-        .contact-links a { color: #ffffff; text-decoration: none; margin: 0 10px; font-size: 1.1rem; background-color: #3498db; padding: 10px 20px; border-radius: 5px; transition: background 0.3s; display: inline-block; margin-bottom: 10px; }
-        .contact-links a:hover { background-color: #2980b9; }
+        .contact-links a { 
+            color: #ffffff; 
+            text-decoration: none; 
+            margin: 0 10px; 
+            font-size: 1.1rem; 
+            background-color: #3498db; 
+            padding: 10px 20px; 
+            border-radius: 8px; 
+            transition: all 0.3s ease; 
+            display: inline-block; 
+            margin-bottom: 15px;
+            /* إضافة الأنيميشن للأزرار */
+            animation: floatBtn 3s ease-in-out infinite;
+        }
+        
+        /* جعل الأزرار تتحرك بتأخير بسيط عن بعضها لشكل جمالي */
+        .contact-links a:nth-child(1) { animation-delay: 0s; }
+        .contact-links a:nth-child(2) { animation-delay: 0.2s; }
+        .contact-links a:nth-child(3) { animation-delay: 0.4s; }
+        .contact-links a:nth-child(4) { animation-delay: 0.6s; }
+        .contact-links a:nth-child(5) { animation-delay: 0.8s; }
+
+        .contact-links a:hover { 
+            background-color: #2980b9; 
+            transform: scale(1.1); /* تكبير الزر قليلاً عند مرور الماوس */
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        /* كود الأنيميشن (الطفو لأعلى ولأسفل) */
+        @keyframes floatBtn {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .contact-info-text {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            color: #bdc3c7;
+            line-height: 2;
+        }
+        .contact-info-text span {
+            color: #3498db;
+            font-weight: bold;
+            display: inline-block;
+            direction: ltr; /* لضبط شكل الأرقام والإيميل */
+        }
     </style>
 </head>
 <body>
@@ -116,7 +161,7 @@
     <!-- الجزء العلوي والصورة الشخصية -->
     <header>
         <div class="header-content">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiyxPWk4T7mdaSvg78_15s1_esPrbvcR5df5BjcvhPEFar7VWnRYWa-SU&s=10" alt="صورتي الشخصية" class="profile-img">
+            <img src="profile.jpg" alt="صورتي الشخصية" class="profile-img">
             <h1>أهلاً بك، أنا مهندس قيد الإنشاء</h1>
             <h2>طالب بالفرقة الإعدادية - كلية الهندسة جامعة المنصورة</h2>
             <p>شغوف بالأنظمة المدمجة (Embedded Systems)، وتصميم دوائر التحكم، وتطوير الحلول البرمجية لربط المكونات المادية بالبرمجيات.</p>
@@ -174,12 +219,23 @@
 
     <!-- التواصل -->
     <footer>
-        <h2>للتواصل</h2>
-        <div class="contact-links">
-            <a href="#">GitHub</a>
-            <a href="#">LinkedIn</a>
+        <h2>للتواصل معي</h2>
+        
+        <div class="contact-info-text">
+            <p>البريد الإلكتروني: <span>salemabied127@gmail.com</span></p>
+            <p>رقم الهاتف / واتساب: <span>01552824498</span></p>
         </div>
-        <p>© 2026 جميع الحقوق محفوظة.</p>
+
+        <div class="contact-links">
+            <!-- أزرار تواصل مباشرة جاهزة للاستخدام -->
+            <a href="tel:01552824498">📞 اتصال</a>
+            <a href="https://wa.me/201552824498" target="_blank">💬 واتساب</a>
+            <a href="mailto:salemabied127@gmail.com">📧 إيميل</a>
+            <a href="#">🔗 GitHub</a>
+            <a href="#">💼 LinkedIn</a>
+        </div>
+        
+        <p style="margin-top: 30px; font-size: 0.9rem; color: #7f8c8d;">© 2026 جميع الحقوق محفوظة | المهندس سالم عبيد</p>
     </footer>
 
     <!-- أكواد جافاسكريبت للتحكم في النافذة المنبثقة وتشغيل الفيديو -->
