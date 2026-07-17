@@ -3,286 +3,543 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الملف الشخصي | طالب هندسة</title>
-    <!-- استدعاء خط كايرو العربي -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>الملف الشخصي | سالم عبيد</title>
+    <!-- استيراد خط كابرو الأنيق وأيقونات FontAwesome للتواصل -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ================= الإعدادات العامة ================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background-color: #f4f7f6; color: #333; line-height: 1.6; }
-        
-        /* ================= الجزء العلوي والصورة ================= */
-        header { background-color: #1a252c; color: #ffffff; text-align: center; padding: 80px 20px; }
-        .profile-img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid #3498db; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        header h1 { font-size: 2.5rem; margin-bottom: 10px; color: #3498db; }
-        header h2 { font-size: 1.5rem; font-weight: 400; margin-bottom: 20px; }
-        header p { max-width: 600px; margin: 0 auto; font-size: 1.1rem; color: #bdc3c7; }
-        
-        /* ================= الأقسام العامة ================= */
-        section { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
-        section h2 { text-align: center; margin-bottom: 40px; font-size: 2rem; color: #2c3e50; border-bottom: 2px solid #3498db; display: inline-block; padding-bottom: 10px; }
-        
-        /* ================= المهارات ================= */
-        .skills-grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
-        .skill-card { background-color: #ffffff; padding: 15px 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); font-weight: bold; color: #2980b9; border: 1px solid #e0e0e0; }
-        
-        /* ================= قسم قوالب المشاريع (الجديد) ================= */
-        .templates-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 30px; 
-        }
-        
-        .template-card { 
-            background: #ffffff; 
-            border-radius: 12px; 
-            overflow: hidden; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-            cursor: pointer; /* يجعل مؤشر الماوس كاليد عند الوقوف عليه */
-            transition: transform 0.3s, box-shadow 0.3s; 
-            border-bottom: 4px solid #3498db; 
-        }
-        
-        .template-card:hover { 
-            transform: translateY(-10px); /* يرفع القالب لأعلى عند مرور الماوس */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
-        }
-        
-        .template-thumb { 
-            width: 100%; 
-            height: 200px; 
-            object-fit: cover; /* يمنع تمطط الصورة */
-        }
-        
-        .template-info { padding: 20px; text-align: center; }
-        .template-info h3 { color: #2c3e50; font-size: 1.3rem; margin-bottom: 10px; }
-        .template-info p { color: #7f8c8d; font-size: 0.95rem; }
-        
-        /* ================= النافذة المنبثقة للفيديو (Modal) ================= */
-        .video-modal { 
-            display: none; /* مخفية افتراضياً */
-            position: fixed; 
-            top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.9); /* خلفية سوداء شفافة */
-            z-index: 1000; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 20px; 
-        }
-        
-        .modal-content { 
-            background: #1a252c; 
-            padding: 20px; 
-            border-radius: 15px; 
-            width: 100%; 
-            max-width: 800px; 
-            text-align: center; 
-            box-shadow: 0 5px 30px rgba(0,0,0,0.5); 
-        }
-        
-        video { 
-            width: 100%; 
-            border-radius: 10px; 
-            outline: none; 
-            border: 2px solid #3498db; 
-            background: #000; 
-        }
-        
-        .close-btn { 
-            background: #e74c3c; 
-            color: #fff; 
-            border: none; 
-            padding: 12px 30px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            margin-top: 20px; 
-            font-size: 1.1rem; 
-            font-weight: bold; 
-            transition: background 0.3s; 
-        }
-        
-        .close-btn:hover { background: #c0392b; }
-        
-        /* ================= الفوتر ================= */
-        footer { background-color: #2c3e50; color: #ffffff; text-align: center; padding: 50px 20px; margin-top: 40px; }
-        .contact-links { margin: 20px 0; }
-        .contact-links a { 
-            color: #ffffff; 
-            text-decoration: none; 
-            margin: 0 10px; 
-            font-size: 1.1rem; 
-            background-color: #3498db; 
-            padding: 10px 20px; 
-            border-radius: 8px; 
-            transition: all 0.3s ease; 
-            display: inline-block; 
-            margin-bottom: 15px;
-            /* إضافة الأنيميشن للأزرار */
-            animation: floatBtn 3s ease-in-out infinite;
-        }
-        
-        /* جعل الأزرار تتحرك بتأخير بسيط عن بعضها لشكل جمالي */
-        .contact-links a:nth-child(1) { animation-delay: 0s; }
-        .contact-links a:nth-child(2) { animation-delay: 0.2s; }
-        .contact-links a:nth-child(3) { animation-delay: 0.4s; }
-        .contact-links a:nth-child(4) { animation-delay: 0.6s; }
-        .contact-links a:nth-child(5) { animation-delay: 0.8s; }
-
-        .contact-links a:hover { 
-            background-color: #2980b9; 
-            transform: scale(1.1); /* تكبير الزر قليلاً عند مرور الماوس */
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --bg-dark: #1a252c;
+            --bg-light: #f4f7f6;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
         }
 
-        /* كود الأنيميشن (الطفو لأعلى ولأسفل) */
-        @keyframes floatBtn {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
         }
 
-        .contact-info-text {
-            margin-bottom: 25px;
-            font-size: 1.2rem;
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        nav {
+            background-color: var(--bg-dark);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
             color: #bdc3c7;
-            line-height: 2;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
-        .contact-info-text span {
-            color: #3498db;
-            font-weight: bold;
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ffffff;
+            background-color: var(--primary);
+        }
+
+        /* حاوية الصفحات */
+        .page {
+            display: none;
+            padding: 100px 20px 60px 20px;
+            min-height: 100vh;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            text-align: center;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary);
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .hero h1 {
+            font-size: 2.3rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .hero h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .skills-section {
+            max-width: 900px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--text-main);
+            position: relative;
             display: inline-block;
-            direction: ltr; /* لضبط شكل الأرقام والإيميل */
+            padding-bottom: 8px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            font-weight: 600;
+            border-top: 4px solid var(--primary);
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .template-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
+            border: 1px solid #eef2f3;
+        }
+
+        .template-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.12);
+        }
+
+        .template-thumb {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eef2f3;
+        }
+
+        .template-info {
+            padding: 20px;
+        }
+
+        .template-info h3 {
+            color: var(--text-main);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .template-info p {
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 6px solid var(--primary);
+        }
+
+        .contact-intro {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .contact-info-list {
+            margin-bottom: 40px;
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .contact-info-item i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn-contact {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            animation: floatBtn 4s ease-in-out infinite;
+        }
+
+        .btn-call { background-color: #2ecc71; animation-delay: 0s; }
+        .btn-whatsapp { background-color: #25d366; animation-delay: 0.5s; }
+        .btn-email { background-color: #e74c3c; animation-delay: 1s; }
+
+        .btn-contact:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        @keyframes floatBtn {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--bg-dark);
+            width: 100%;
+            max-width: 800px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .modal-video-wrapper {
+            position: relative;
+            padding-top: 56.25%; /* أبعاد 16:9 الشاشات */
+            background: #000;
+        }
+
+        .modal-video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .close-btn {
+            background-color: #ff3b30;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+
+        .close-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .video-error-msg {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-align: center;
+            width: 90%;
+            z-index: 10;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        footer {
+            background-color: var(--bg-dark);
+            color: #bdc3c7;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.95rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- الجزء العلوي والصورة الشخصية -->
-    <header>
-        <div class="header-content">
-            <img src="images/SALEM.jpg" alt="صورتي الشخصية" class="profile-img">
-            <h1>أهلاً بك، أنا مهندس قيد الإنشاء</h1>
-            <h2>طالب بالفرقة الإعدادية - كلية الهندسة جامعة المنصورة</h2>
-            <p>شغوف بالأنظمة المدمجة (Embedded Systems)، وتصميم دوائر التحكم، وتطوير الحلول البرمجية لربط المكونات المادية بالبرمجيات.</p>
+    <nav>
+        <div class="nav-container">
+            <a onclick="showPage('home')" class="logo">سالم <span>عبيد</span></a>
+            <ul class="nav-links">
+                <li><a id="link-home" onclick="showPage('home')" class="active">الرئيسية</a></li>
+                <li><a id="link-projects" onclick="showPage('projects')">المشاريع</a></li>
+                <li><a id="link-contact" onclick="showPage('contact')">تواصل معي</a></li>
+            </ul>
         </div>
-    </header>
+    </nav>
 
-    <!-- المهارات -->
-    <section class="skills">
-        <h2>المهارات التقنية</h2>
-        <div class="skills-grid">
-            <div class="skill-card">لغات البرمجة: C, C++</div>
-            <div class="skill-card">متحكمات: Arduino</div>
-            <div class="skill-card">مكونات: Sensors, Servos</div>
+    <!-- الصفحة الرئيسية -->
+    <div id="page-home" class="page active">
+        <div class="hero">
+            <img src="images/SALEM.jpg" alt="سالم عبيد" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
+            <h1>أهلاً بك، أنا سالم عبيد</h1>
+            <h2>طالب بكلية الهندسة - جامعة المنصورة</h2>
+            <p>شغوف بمجالات الهندسة، الأنظمة المدمجة (Embedded Systems)، وتطوير البرمجيات والأكواد للتحكم بالمكونات المادية المبتكرة.</p>
         </div>
-    </section>
 
-    <!-- قسم قوالب المشاريع (الفيديوهات) -->
-    <section class="projects">
-        <h2>معرض المشاريع</h2>
+        <div class="skills-section">
+            <h2 class="section-title">المهارات التقنية</h2>
+            <div class="skills-grid">
+                <div class="skill-card">لغات البرمجة: C, C++</div>
+                <div class="skill-card">ميكروكنترولر: Arduino Mega</div>
+                <div class="skill-card">أنظمة التحكم والـ Joystick</div>
+                <div class="skill-card">ربط الحساسات والمحركات</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة المشاريع والقوالب -->
+    <div id="page-projects" class="page">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h2 class="section-title">قوالب ومشاريع الفيديو</h2>
+            <p style="color: var(--text-muted);">اضغط على أي قالب من القوالب التالية لفتح الفيديو الخاص بالمشروع فوراً</p>
+        </div>
+
         <div class="templates-grid">
-            
             <!-- القالب الأول -->
-            <!-- لاحظ وضع مسار الفيديو video1.mp4 داخل دالة openVideo -->
             <div class="template-card" onclick="openVideo('video1.mp4')">
-                <img src="thumb1.jpg" alt="صورة المشروع الأول" class="template-thumb">
+                <img src="images/SALEM.jpg" alt="مشروع التحكم في المحرك" class="template-thumb" onerror="this.src='https://via.placeholder.com/350x200'">
                 <div class="template-info">
-                    <h3>التحكم في Servo Motor</h3>
-                    <p>اضغط هنا لمشاهدة فيديو المشروع</p>
+                    <h3>Servo Motor التحكم في الـ</h3>
+                    <p><i class="fa-solid fa-circle-play"></i> اضغط هنا لمشاهدة فيديو المشروع</p>
                 </div>
             </div>
 
             <!-- القالب الثاني -->
             <div class="template-card" onclick="openVideo('joystick.mp4')">
-                <img src="thumb2.jpg" alt="صورة المشروع الثاني" class="template-thumb">
+                <img src="images/SALEM.jpg" alt="مشروع التحكم بالـ Joystick" class="template-thumb" onerror="this.src='https://via.placeholder.com/350x200'">
                 <div class="template-info">
-                    <h3>التحكم بال joystick</h3>
-                    <p>اضغط هنا لمشاهدة فيديو المشروع</p>
+                    <h3>Joystick التحكم بالـ</h3>
+                    <p><i class="fa-solid fa-circle-play"></i> اضغط هنا لمشاهدة فيديو المشروع</p>
                 </div>
             </div>
-
-        </div>
-    </section>
-
-    <!-- النافذة المنبثقة للفيديو (يتم تشغيلها بواسطة جافاسكريبت) -->
-    <div id="videoModal" class="video-modal">
-        <div class="modal-content">
-            <video id="projectVideo" controls>
-                <source src="" type="video/mp4">
-                متصفحك لا يدعم عرض الفيديو.
-            </video>
-            <br>
-            <button class="close-btn" onclick="closeVideo()">إغلاق الفيديو</button>
         </div>
     </div>
 
-    <!-- التواصل -->
-    <footer>
-        <h2>للتواصل معي</h2>
-        
-        <div class="contact-info-text">
-            <p>البريد الإلكتروني: <span>salemabied127@gmail.com</span></p>
-            <p>رقم الهاتف / واتساب: <span>01552824498</span></p>
-        </div>
+    <!-- صفحة اتصل بنا -->
+    <div id="page-contact" class="page">
+        <div class="contact-container">
+            <h2 class="section-title">تواصل معي</h2>
+            <p class="contact-intro">يسعدني تواصلك معي للاستفسار عن المشاريع أو لمناقشة فرص التعاون الهندسي والبرمجي.</p>
+            
+            <div class="contact-info-list">
+                <div class="contact-info-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>salemabied127@gmail.com</span>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>01552824498</span>
+                </div>
+            </div>
 
-        <div class="contact-links">
-            <!-- أزرار تواصل مباشرة جاهزة للاستخدام -->
-            <a href="tel:01552824498">📞 اتصال</a>
-            <a href="https://wa.me/201552824498" target="_blank">💬 واتساب</a>
-            <a href="mailto:salemabied127@gmail.com">📧 إيميل</a>
-            <a href="#">🔗 GitHub</a>
-            <a href="#">💼 LinkedIn</a>
+            <!-- أزرار الاتصال التفاعلية مع أنيميشن الطفو -->
+            <div class="contact-buttons">
+                <a href="tel:01552824498" class="btn-contact btn-call">
+                    <i class="fa-solid fa-phone"></i> اتصال مباشر بالهاتف
+                </a>
+                <a href="https://wa.me/201552824498" target="_blank" class="btn-contact btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i> راسلني عبر واتساب
+                </a>
+                <a href="mailto:salemabied127@gmail.com" class="btn-contact btn-email">
+                    <i class="fa-solid fa-envelope"></i> أرسل بريداً إلكترونياً
+                </a>
+            </div>
         </div>
-        
-        <p style="margin-top: 30px; font-size: 0.9rem; color: #7f8c8d;">© 2026 جميع الحقوق محفوظة | المهندس سالم عبيد</p>
+    </div>
+
+    <!-- الفوتر -->
+    <footer>
+        <p>© 2026 المهندس سالم عبيد. جميع الحقوق محفوظة.</p>
     </footer>
 
-    <!-- أكواد جافاسكريبت للتحكم في النافذة المنبثقة وتشغيل الفيديو -->
+    <!-- النافذة المنبثقة للفيديو -->
+    <div id="videoModal" class="video-modal" onclick="closeVideo(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-video-wrapper">
+                <video id="modalVideo" controls playsinline>
+                    متصفحك لا يدعم مشغل الفيديوهات الحالي.
+                </video>
+                <!-- رسالة تظهر في حال وجود مشكلة تحميل الفيديو -->
+                <div id="videoError" class="video-error-msg">
+                    <i class="fa-solid fa-circle-exclamation" style="font-size: 2rem; color: #e74c3c; margin-bottom: 10px;"></i>
+                    <p>عذراً، يبدو أن جيت هاب ما زال يقوم برفع وتثبيت ملف الفيديو على خوادمه.</p>
+                    <p style="font-size: 0.9rem; margin-top: 5px; color: #bdc3c7;">يرجى الانتظار دقيقتين ثم قم بتحديث الصفحة والمحاولة مجدداً.</p>
+                </div>
+            </div>
+            <button class="close-btn" onclick="closeVideo(null)">إغلاق نافذة الفيديو</button>
+        </div>
+    </div>
+
     <script>
-        function openVideo(videoSrc) {
-            var modal = document.getElementById('videoModal');
-            var video = document.getElementById('projectVideo');
+        // دالة التنقل بين الصفحات المستقلة بسلاسة وبدون تحميل
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
             
-            // وضع مسار الفيديو الذي تم الضغط عليه داخل المشغل
-            video.src = videoSrc;
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => link.classList.remove('active'));
             
-            // إظهار النافذة المنبثقة
+            document.getElementById('page-' + pageId).classList.add('active');
+            document.getElementById('link-' + pageId).classList.add('active');
+
+            // إيقاف أي فيديو يعمل في الخلفية عند التنقل لصفحة أخرى
+            const video = document.getElementById('modalVideo');
+            video.pause();
+        }
+
+        // دالة فتح وتشغيل الفيديو بشكل آمن
+        function openVideo(videoUrl) {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+            const errorMsg = document.getElementById('videoError');
+
+            errorMsg.style.display = 'none'; // إخفاء رسالة الخطأ مسبقاً
             modal.style.display = 'flex';
             
-            // تشغيل الفيديو تلقائياً
-            video.play();
-        }
+            video.src = videoUrl;
+            video.load(); 
 
-        function closeVideo() {
-            var modal = document.getElementById('videoModal');
-            var video = document.getElementById('projectVideo');
-            
-            // إيقاف الفيديو
-            video.pause();
-            
-            // مسح المسار حتى لا يستمر التحميل في الخلفية
-            video.src = '';
-            
-            // إخفاء النافذة
-            modal.style.display = 'none';
-        }
-
-        // دالة التنقل بين الصفحات
-        function showPage(pageId) {
-            if(pageId === 'home') {
-                document.getElementById('homePage').style.display = 'block';
-                document.getElementById('contactPage').style.display = 'none';
-                document.getElementById('nav-home').classList.add('active');
-                document.getElementById('nav-contact').classList.remove('active');
-            } else if (pageId === 'contact') {
-                document.getElementById('homePage').style.display = 'none';
-                document.getElementById('contactPage').style.display = 'block';
-                document.getElementById('nav-home').classList.remove('active');
-                document.getElementById('nav-contact').classList.add('active');
+            // محاولة التشغيل والتعامل مع قيود المتصفحات
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("تم حظر التشغيل التلقائي من المتصفح، يحتاج لتفاعل المستخدم.");
+                });
             }
-            // تمرير الشاشة للأعلى
-            window.scrollTo(0, 0);
+
+            // الاستماع لحالات فشل تحميل ملف الفيديو
+            video.onerror = function() {
+                errorMsg.style.display = 'block';
+            };
+        }
+
+        // دالة إغلاق مشغل الفيديو تفريغ الذاكرة
+        function closeVideo(event) {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+            
+            video.pause();
+            video.src = ""; // تفريغ المصدر لتوفير باقة المستخدم وسرعة الصفحة
+            modal.style.display = 'none';
         }
     </script>
 </body>
